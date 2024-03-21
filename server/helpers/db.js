@@ -1,5 +1,7 @@
 require('dotenv').config();
 const { Pool } = require('pg');
+
+
 const query = (sql, values = []) => {
     return new Promise(async(resolve, reject) => {
         try {

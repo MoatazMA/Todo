@@ -1,15 +1,18 @@
-require('dotenv').config()
-console.log(process.env)
+require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
-//const { Pool } = require('pg');
-const {query} = require('./helpers/db.js')
+
+const { query } = require('./helpers/db.js');
+
+
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-const port = process.env.port;
+
+const port = process.env.PORT;
 
 
 const openDb = () => {
@@ -19,17 +22,13 @@ const openDb = () => {
         database: process.env.DB_NAME,
         password: process.env.DB_PASSWORD,
         port: process.env.DB_PORT,
+
     });
     return pool;
 }
 
-module.exports = {
-    query
-}
-
 app.get('/', async (req, res) => {
     console.log(query)
-
     try {
 
         const result = await query('SELECT * FROM task');
@@ -41,10 +40,9 @@ app.get('/', async (req, res) => {
         res.statusMessage = error;
         res.status(500).json({error: error});
     }
-})
-
+});
 app.post('/new', async (req, res) => {
-    
+
     try {
 
         const result = await query('INSERT INTO task (description) VALUES ($1) RETURNING *', 
@@ -71,7 +69,5 @@ app.delete('/delete/:id', async(req, res) => {
         res.status(500).json({error: error});
     }
 });
-
-
 
 app.listen(port);

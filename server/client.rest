@@ -7,3 +7,7 @@ Content-Type: application/json
 {
     "description": "Test from Rest Client"
 }
+#### Update a task
+DELETE http://localhost:3001/delete/36 HTTP/1.1
+
+

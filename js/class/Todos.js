@@ -16,7 +16,7 @@ class Todos {
                 this.#readJson(json)
                 resolve(this.#tasks);
             }, error => {
-                reject(error);
+                reject(error);  
             })
         })
     }
